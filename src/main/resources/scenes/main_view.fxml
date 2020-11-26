@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -35,12 +35,15 @@
          <bottom>
             <BorderPane BorderPane.alignment="CENTER">
                <right>
-                  <JFXButton fx:id="completeButton" onAction="#handleCompleteAction" text="Complete" textAlignment="CENTER" BorderPane.alignment="CENTER" />
+                  <JFXButton fx:id="completeButton" onAction="#handleCompleteAction" text="Complete" textAlignment="CENTER" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font></JFXButton>
                </right>
                <center>
                   <JFXTextField fx:id="statusText" editable="false" BorderPane.alignment="CENTER">
                      <font>
-                        <Font name="System Italic" size="12.0" />
+                        <Font name="System Italic" size="16.0" />
                      </font>
                   </JFXTextField>
                </center>
@@ -49,17 +52,23 @@
          <left>
             <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <top>
-                  <Label text="Enabled Activities" BorderPane.alignment="CENTER" />
+                  <Label text="Enabled Activities" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
                </top>
                <center>
-                  <JFXListView fx:id="transitionList" BorderPane.alignment="CENTER" />
+                  <JFXListView fx:id="transitionList" stylesheets="@style.css" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
          </left>
          <center>
             <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <top>
-                  <Label text="Available I/O-Sets" BorderPane.alignment="CENTER" />
+                  <Label text="Available I/O-Sets" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
                </top>
                <center>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
