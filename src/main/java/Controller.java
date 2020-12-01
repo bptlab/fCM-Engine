@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Controller {
@@ -182,20 +184,33 @@ public class Controller {
         List<Arc> targetArcs = bi.getTransitionInstance().getNode().getTargetArc();
         List<Arc> sourceArcs = bi.getTransitionInstance().getNode().getSourceArc();
         for (ValueAssignment assignment : assignments) {
-            DataObjectToken token = new DataObjectToken();
             String variable = assignment.getName();
-            if (!(variable.contains("Count") || variable.contains("Id"))) continue;
+            if (!(variable.contains("Count") || variable.contains("Id") || variable.endsWith("_list"))) continue;
             String value = assignment.getValue();
-            token.isNewObject = variable.contains("Count");
-            token.name = variable.replaceFirst("Count|Id", "");
-            token.state = (token.isNewObject ? sourceArcs : targetArcs).stream()
-                    .map(a -> a.getHlinscription().getText())
-                    .filter(insc -> insc.startsWith("{id = " + token.name + "Id"))
-                    .map(insc -> insc.replaceAll("(^.+, state =)|}", ""))
-                    .findFirst()
-                    .orElse(null);
-            token.count = token.isNewObject ? value : value.replaceAll("(\\(|\\)|\"|case|[A-Za-z]+,)", "");
-            tokens.add(token);
+            if (variable.endsWith("_list") && !variable.contains("Count") && !variable.contains("id")) {
+                String name = variable.substring(0, variable.length() - "_list".length());
+                Pattern pattern = Pattern.compile("\\{id=\\([a-z]+,(\\d+)\\),caseId=\"case\\d+\",state=([A-Z]+)}");
+                Matcher matcher = pattern.matcher(value);
+                while (matcher.find()) {
+                    DataObjectToken token = new DataObjectToken();
+                    token.name = name;
+                    token.count = matcher.group(1);
+                    token.state = matcher.group(2);
+                    tokens.add(token);
+                }
+            } else {
+                DataObjectToken token = new DataObjectToken();
+                token.isNewObject = variable.contains("Count");
+                token.name = variable.replaceFirst("Count|Id", "");
+                token.state = (token.isNewObject ? sourceArcs : targetArcs).stream()
+                        .map(a -> a.getHlinscription().getText())
+                        .filter(insc -> insc.startsWith("{id = " + token.name + "Id"))
+                        .map(insc -> insc.replaceAll("(^.+, state =)|}", ""))
+                        .findFirst()
+                        .orElse(null);
+                token.count = token.isNewObject ? value : value.replaceAll("(\\(|\\)|\"|case|[A-Za-z]+,)", "");
+                tokens.add(token);
+            }
         }
         return tokens;
     }
