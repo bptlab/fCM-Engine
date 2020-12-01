@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="365.0" prefWidth="621.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea editable="false" prefHeight="365.0" prefWidth="623.0" text="fCM-Engine is a prototypical engine for fCM models (&lt;https://github.com/bptlab/fcm-engine/&gt;).&#10;The engine is based on CPNtools (see &lt;https://cpntools.org&gt;.&#10;Checkout the fcm2CPN compiler at &lt;https://github.com/bptlab/fcm2cpn/&gt;&#10;Copyright (C) 2020  Hasso Plattner Institute gGmbH, University of Potsdam&#10;&#10;This program is free software: you can redistribute it and/or modify&#10;it under the terms of the GNU General Public License as published by&#10;the Free Software Foundation, either version 3 of the License, or&#10;(at your option) any later version.&#10;&#10;This program is distributed in the hope that it will be useful,&#10;but WITHOUT ANY WARRANTY; without even the implied warranty of&#10;MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#10;GNU General Public License for more details.&#10;&#10;You should have received a copy of the GNU General Public License&#10;along with this program.  If not, see &lt;https://www.gnu.org/licenses/&gt;.">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextArea>
+   </children>
+</Pane>
