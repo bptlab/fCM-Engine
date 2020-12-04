@@ -311,7 +311,6 @@ public class Controller {
 
     private File getFile(String description, String extensions) {
         FileChooser fileChooser = new FileChooser();
-        //fileChooser.setInitialDirectory(new File("C:\\Users\\stephan.haarmann\\Documents\\Projects\\demo"));
         fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(description, extensions));
         fileChooser.setTitle("Choose " + description);
         return fileChooser.showOpenDialog(null);
