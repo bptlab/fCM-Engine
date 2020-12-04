@@ -7,6 +7,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -76,7 +77,11 @@
                         <JFXListView fx:id="bindingList" prefHeight="80.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
                      </top>
                      <center>
-                        <VBox fx:id="objectBox" prefHeight="200.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER" />
+                        <ScrollPane fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+                           <content>
+                              <VBox fx:id="objectBox" prefHeight="196.0" prefWidth="400.0" spacing="20.0" style="-fx-background-color: whitesmoke;" />
+                           </content>
+                        </ScrollPane>
                      </center>
                   </BorderPane>
                </center>

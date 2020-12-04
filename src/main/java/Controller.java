@@ -108,10 +108,29 @@ public class Controller {
     private void renderObjectsFor(Binding binding) {
         // Identify case
         String caseId = binding.getAllAssignments().stream()
+                .filter(v -> v.getName().equals("caseId"))
                 .map(ValueAssignment::getValue)
-                .filter(v -> v.contains("case"))
-                .findFirst()
-                .orElse(null);
+                .map(v -> v.replaceAll("\"", ""))
+                .findFirst().orElse(null);
+        if (caseId == null) {
+            caseId = binding.getAllAssignments().stream()
+                    .map(ValueAssignment::getValue)
+                    .filter(v -> v.matches("case\\d+"))
+                    .map(v -> {
+                        Pattern pattern = Pattern.compile("case\\d+");
+                        Matcher matcher = pattern.matcher(v);
+                        return matcher.find() ? matcher.group(0) : null;
+                    })
+                    .filter(Objects::nonNull)
+                    .findFirst()
+                    .orElse(null);
+        }
+        if (caseId == null)
+            caseId = "case" + binding.getAllAssignments().stream()
+                    .filter(v -> v.getName().equals("count"))
+                    .map(ValueAssignment::getValue)
+                    .findAny()
+                    .orElse("0");
         // Get or create object model
         ObjectModel objectModel = objectModels.computeIfAbsent(caseId, s -> new ObjectModel(domainModel));
         // Parse tokens
@@ -292,9 +311,9 @@ public class Controller {
 
     private File getFile(String description, String extensions) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File("C:\\Users\\stephan.haarmann\\Documents\\Projects\\fCMwithCPNTools\\src\\main\\resources"));
+        //fileChooser.setInitialDirectory(new File("C:\\Users\\stephan.haarmann\\Documents\\Projects\\demo"));
         fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(description, extensions));
-        fileChooser.setTitle("Choose CPN File");
+        fileChooser.setTitle("Choose " + description);
         return fileChooser.showOpenDialog(null);
     }
 

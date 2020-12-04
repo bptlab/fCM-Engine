@@ -53,7 +53,8 @@ public class DataObject {
             case "int":
                 return Integer.parseInt(value);
             default:
-                return null;
+
+                return value;
         }
     }
 
