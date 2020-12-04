@@ -23,6 +23,10 @@ Given a CPN and an optional domain model (UML class diagram), the engine will gu
 
 ## Usage
 
+#### [Watch our short demo (~ 3 min) on Youtube.](https://youtu.be/ODpgQvxxQzY)
+
+#### [Watch our not so short demo (~ 9 min) on Youtube.](https://youtu.be/ogvqiO6a9Wg) 
+
 ### Prerequisites
 
 In order to run the engine you need
