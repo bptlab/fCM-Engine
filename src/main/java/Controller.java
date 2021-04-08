@@ -95,6 +95,11 @@ public class Controller {
         // check Petri net
         checkPetriNet(petriNet, simulator);
         clearStatus();
+        System.out.println(simulator.evaluate("use \"" + getModelDirectory() + "simpledfs.sml\""));
+        System.out.println(simulator.evaluate("CPNToolsModel.getInitialStates()"));
+        System.out.println(simulator.evaluate("let val (s, storage) = dfs dead (CPNToolsModel.getInitialStates())" +
+                " in (s, HashTable.numItems storage) " +
+                "end"));
         try {
             setBasicParameters();
             // start execution
@@ -329,6 +334,7 @@ public class Controller {
         checker.checkMonitors();
         checker.generateNonPlaceInstances();
         checker.initialiseSimulationScheduler();
+        checker.instantiateSMLInterface();
     }
 
     private enum Status {
