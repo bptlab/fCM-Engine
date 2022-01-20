@@ -1,3 +1,5 @@
+package de.hpi.bpt.fcm.engine.model;
+
 public class DataClazz {
     protected String name;
     protected String[] attributes;
@@ -24,5 +26,13 @@ public class DataClazz {
         DataObject dataObject = new DataObject(this);
         dataObject.setInstanceNo(instanceNo);
         return dataObject;
+    }
+
+    public String[] getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(String[] attributes) {
+        this.attributes = attributes;
     }
 }

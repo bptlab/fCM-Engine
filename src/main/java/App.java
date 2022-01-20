@@ -1,22 +1,19 @@
+import de.hpi.bpt.fcm.engine.model.CaseModel;
+import de.hpi.bpt.fcm.engine.view.MainForm;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class App extends Application {
+import javax.swing.*;
+
+public class App {
 
     public static void main(String[] args) {
-        App.launch(args);
+        JFrame mainFrame = new MainForm("fCM Engine", new CaseModel());
+        mainFrame.setSize(500, 500);
+        mainFrame.setVisible(true);
     }
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        // load Default Scene
-        Parent root = FXMLLoader.load(getClass().getResource("scenes/main_view.fxml"));
-        Scene scene = new Scene(root, 1080, 720);
-        primaryStage.setTitle("FXML Welcome");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
 }
