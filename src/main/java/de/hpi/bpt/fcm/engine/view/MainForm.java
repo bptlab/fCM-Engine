@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainForm extends JFrame {
-    public JPanel panel = new JPanel();
+    public JSplitPane panel;
     public JMenuBar menuBar = new JMenuBar();
     public JMenu fileMenu = new JMenu("File");
     public JMenuItem loadCPNItem = new JMenuItem("Load CPN");
@@ -45,15 +45,19 @@ public class MainForm extends JFrame {
         menuBar.add(aboutMenu);
         setJMenuBar(menuBar);
         // Content Pane
-        panel.setLayout(new BorderLayout());
-        panel.add(new JScrollPane(workItemList), BorderLayout.WEST);
-        panel.add(new JScrollPane(inputOutputList), BorderLayout.NORTH);
+        //panel.setLayout(new BorderLayout());
+        //panel.add(new JScrollPane(workItemList), BorderLayout.WEST);
+        //panel.add(new JScrollPane(inputOutputList), BorderLayout.NORTH);
         statusPanel.setLayout(new BorderLayout());
         completeButton.addActionListener(new CompleteButtonListener(caseModel.getCpn(), formPanel));
         statusPanel.add(completeButton, BorderLayout.EAST);
         statusPanel.add(statusText, BorderLayout.CENTER);
-        panel.add(statusPanel, BorderLayout.SOUTH);
-        panel.add(new JScrollPane(formPanel), BorderLayout.CENTER);
+        JSplitPane workArea = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(workItemList), new JScrollPane(formPanel));
+        JPanel bigArea = new JPanel();
+        bigArea.setLayout(new BorderLayout());
+        bigArea.add(statusPanel, BorderLayout.SOUTH);
+        bigArea.add(new JScrollPane(workArea), BorderLayout.CENTER);
+        panel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, new JScrollPane(inputOutputList), bigArea);
         this.add(panel);
     }
 
