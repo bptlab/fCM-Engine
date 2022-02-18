@@ -36,6 +36,7 @@ public class SelectInputOutputListListener implements ListSelectionListener {
     }
 
     private void updateObjectPanel(List<ColoredPetriNet.DataObjectToken> tokens) {
+        if (null == caseModel.getOm()) return;
         objectPanel.removeAll();
         for (ColoredPetriNet.DataObjectToken token : tokens) {
             if (token.getName().equalsIgnoreCase("case")) continue;
