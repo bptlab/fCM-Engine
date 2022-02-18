@@ -49,6 +49,8 @@ public class MainForm extends JFrame {
         //panel.add(new JScrollPane(workItemList), BorderLayout.WEST);
         //panel.add(new JScrollPane(inputOutputList), BorderLayout.NORTH);
         statusPanel.setLayout(new BorderLayout());
+        formPanel.setBackground(new Color(40, 40, 40));
+        formPanel.setLayout(new FlowLayout());
         completeButton.addActionListener(new CompleteButtonListener(caseModel.getCpn(), formPanel));
         statusPanel.add(completeButton, BorderLayout.EAST);
         statusPanel.add(statusText, BorderLayout.CENTER);

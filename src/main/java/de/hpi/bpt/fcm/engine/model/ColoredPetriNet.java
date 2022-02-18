@@ -194,9 +194,12 @@ public class ColoredPetriNet {
                 token.isNewObject = variable.contains("Count");
                 token.name = variable.replaceFirst("Count|Id", "");
                 token.state = (token.isNewObject ? sourceArcs : targetArcs).stream()
-                        .map(a -> a.getHlinscription().getText())
-                        .filter(insc -> insc.startsWith("{id = " + token.name + "Id"))
-                        .map(insc -> insc.replaceAll("(^.+, state =)|}", ""))
+                        .map(a -> token.isNewObject ? a.getTarget().getName().getText() : a.getSource().getName().getText())
+                        .filter(label -> label.toLowerCase().contains(token.name.toLowerCase() + "__"))
+                        .map(label -> label.toLowerCase().substring(token.name.toLowerCase().length() + 2))
+                        //.map(a -> a.getHlinscription().getText())
+                        //.filter(insc -> insc.startsWith("{id = " + token.name + "Id"))
+                        //.map(insc -> insc.replaceAll("(^.+, state =)|}", ""))
                         .findFirst()
                         .orElse(null);
                 token.count = token.isNewObject ? value : value.replaceAll("(\\(|\\)|\"|case|[A-Za-z]+,)", "");

@@ -13,6 +13,7 @@ public class DataObjectView extends JPanel {
     public DataObjectView(DataObject dataObject) {
         super();
         this.dataObject = dataObject;
+        this.setBackground(new Color(43, 43, 43));
         this.initialize();
     }
 
