@@ -18,7 +18,11 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.xml.sax.SAXException;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.xml.parsers.ParserConfigurationException;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -141,6 +145,18 @@ public class ColoredPetriNet {
                 enabledActivities.get(activityName).add(ti);
             }
         }
+    }
+
+    private boolean transactionIsAViolation() {
+        String transitionName = selectedBinding.getTransitionInstance().getNode().getName().getText();
+        String activityName = transitionName.replaceFirst("_\\d+$", "").replaceAll("\\n", " ");
+        String label = formatBinding(selectedBinding);
+        boolean oldRecommendations = recommendations;
+        recommendations = true;
+        Recommendation activityRecommendation = recommendationForActivity(activityName);
+        Recommendation recommendation = recommendationForInputOutputAndActivity(new ElementWithRecommendation(activityName, activityRecommendation), label);
+        recommendations = oldRecommendations;
+        return recommendation.equals(Recommendation.VIOLATING);
     }
 
     private Recommendation recommendationForActivity(String activityName) {
@@ -271,6 +287,10 @@ public class ColoredPetriNet {
         if (selectedBinding == null) return false;
         try {
             simulator.execute(selectedBinding);
+            if (transactionIsAViolation()) {
+                ErrorDialog dialog = new ErrorDialog();
+                dialog.setVisible(true);
+            }
             reassessed = selectedBinding.getTransitionInstance().getNode().getName().getText().contains("reassess_claim");
             initialize();
         } catch (IOException e) {
@@ -400,6 +420,32 @@ public class ColoredPetriNet {
         @Override
         public String toString() {
             return getObjectId() + (null == state ? "" : "[" + state + "]");
+        }
+    }
+
+    private class ErrorDialog extends JDialog {
+        public ErrorDialog() {
+            super();
+            this.setSize(420, 180);
+            this.setLayout(new BorderLayout());
+            JTextPane errorMessage = new JTextPane();
+            errorMessage.setEnabled(false);
+            errorMessage.setDisabledTextColor(errorMessage.getForeground());
+            errorMessage.setText("You have executed an action that conflicts with your goal. Therefore, you cannot reach your goal anymore.");
+            this.add(errorMessage, BorderLayout.CENTER);
+            this.setLocationRelativeTo(null);
+            this.setModal(true);
+            JButton closeButton = new JButton("close engine");
+            closeButton.setForeground(new Color(199, 84, 80   ));
+            closeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setVisible(false);
+                    dispose();
+                    System.exit(0);
+                }
+            });
+            this.add(closeButton, BorderLayout.SOUTH);
         }
     }
 }

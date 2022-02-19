@@ -6157,8 +6157,8 @@ map (fn(el) =&gt; {id = unpack el collectionClass , caseId = caseId}) (listAssoc
         </initmark>
         <port id="ID1436015131"
               type="Out">
-          <posattr x="-301.000000"
-                   y="-143.000000"/>
+          <posattr x="-307.000000"
+                   y="-99.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -24161,8 +24161,8 @@ action (String.concat[&quot;case&quot;, Int.toString(count)], (claim, claimCount
         <transend idref="id587"/>
         <placeend idref="id588"/>
         <annot id="id589a">
-          <posattr x="796.000000"
-                   y="441.000000"/>
+          <posattr x="788.000000"
+                   y="440.000000"/>
           <fillattr colour="White"
                     pattern="Solid"
                     filled="false"/>
@@ -24173,38 +24173,6 @@ action (String.concat[&quot;case&quot;, Int.toString(count)], (claim, claimCount
                     bold="false"/>
           <text tool="CPN Tools"
                 version="4.0.1">count</text>
-        </annot>
-      </arc>
-      <arc id="id590"
-           orientation="TtoP"
-           order="1">
-        <posattr x="0.000000"
-                 y="0.000000"/>
-        <fillattr colour="White"
-                  pattern="Solid"
-                  filled="false"/>
-        <lineattr colour="Black"
-                  thick="1"
-                  type="Solid"/>
-        <textattr colour="Black"
-                  bold="false"/>
-        <arrowattr headsize="1.000000"
-                   currentcyckle="2"/>
-        <transend idref="id587"/>
-        <placeend idref="id588"/>
-        <annot id="id590a">
-          <posattr x="796.000000"
-                   y="441.000000"/>
-          <fillattr colour="White"
-                    pattern="Solid"
-                    filled="false"/>
-          <lineattr colour="Black"
-                    thick="0"
-                    type="Solid"/>
-          <textattr colour="Black"
-                    bold="false"/>
-          <text tool="CPN Tools"
-                version="4.0.1">count + 1</text>
         </annot>
       </arc>
       <arc id="id593"
@@ -25869,8 +25837,8 @@ risk_list = filter (fn(obj) =&gt; #1 (#id obj) = risk) registry,
           <position value="11"/>
           <position value="12"/>
           <position value="13"/>
-          <position value="3"/>
           <position value="4"/>
+          <position value="3"/>
         </zorder>
       </cpnbinder>
     </binders>
@@ -25940,9 +25908,7 @@ risk_list = filter (fn(obj) =&gt; #1 (#id obj) = risk) registry,
           <IndexNode expanded="false"/>
         </IndexNode>
       </IndexNode>
-      <IndexNode expanded="false">
-        <IndexNode expanded="false"/>
-      </IndexNode>
+      <IndexNode expanded="false"/>
       <IndexNode expanded="true">
         <IndexNode expanded="false">
           <IndexNode expanded="false"/>

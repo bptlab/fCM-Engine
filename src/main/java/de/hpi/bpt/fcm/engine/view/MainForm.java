@@ -37,11 +37,11 @@ public class MainForm extends JFrame {
                 if (value instanceof ColoredPetriNet.ElementWithRecommendation) {
                     switch (((ColoredPetriNet.ElementWithRecommendation)value).getRecommendation()) {
                         case COMPLIANT :
+                        case BOTH:
                             c.setForeground(new Color(73, 156, 84));
                             break;
-                        case BOTH:
-                            c.setForeground(new Color(246, 191, 105));
-                            break;
+                            //c.setForeground(new Color(246, 191, 105));
+                            //break;
                         case VIOLATING:
                             c.setForeground(new Color(199, 84, 80   ));
                             break;
