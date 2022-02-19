@@ -2,6 +2,7 @@ package de.hpi.bpt.fcm.engine.view;
 
 import de.hpi.bpt.fcm.engine.controller.*;
 import de.hpi.bpt.fcm.engine.model.CaseModel;
+import de.hpi.bpt.fcm.engine.model.ColoredPetriNet;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,11 +30,48 @@ public class MainForm extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         // List
         workItemList = new JList(caseModel.getCpn().getWorkItemModel());
+        workItemList.setCellRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellhasFocus) {
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellhasFocus);
+                if (value instanceof ColoredPetriNet.ElementWithRecommendation) {
+                    switch (((ColoredPetriNet.ElementWithRecommendation)value).getRecommendation()) {
+                        case COMPLIANT :
+                            c.setForeground(new Color(73, 156, 84));
+                            break;
+                        case BOTH:
+                            c.setForeground(new Color(246, 191, 105));
+                            break;
+                        case VIOLATING:
+                            c.setForeground(new Color(199, 84, 80   ));
+                            break;
+                    }
+                }
+                return c;
+            }
+        });
         workItemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         workItemList.addListSelectionListener(new SelectWorkItemListener(caseModel.getCpn()));
         inputOutputList = new JList(caseModel.getCpn().getInputOutputModel());
         inputOutputList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         inputOutputList.addListSelectionListener(new SelectInputOutputListListener(caseModel, formPanel, dataObjectViews));
+        inputOutputList.setCellRenderer(new DefaultListCellRenderer(){
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellhasFocus) {
+                Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellhasFocus);
+                if (value instanceof ColoredPetriNet.ElementWithRecommendation) {
+                    switch (((ColoredPetriNet.ElementWithRecommendation)value).getRecommendation()) {
+                        case COMPLIANT :
+                            c.setForeground(new Color(73, 156, 84));
+                            break;
+                        case VIOLATING:
+                            c.setForeground(new Color(199, 84, 80   ));
+                            break;
+                    }
+                }
+                return c;
+            }
+        });
         // Menu
         exitOption.addActionListener(event -> System.exit(0));
         loadCPNItem.addActionListener(new LoadCPNListener(caseModel.getCpn()));
@@ -51,7 +89,7 @@ public class MainForm extends JFrame {
         statusPanel.setLayout(new BorderLayout());
         formPanel.setBackground(new Color(40, 40, 40));
         formPanel.setLayout(new FlowLayout());
-        completeButton.addActionListener(new CompleteButtonListener(caseModel.getCpn(), formPanel));
+        completeButton.addActionListener(new CompleteButtonListener(caseModel.getCpn(), formPanel, statusText));
         statusPanel.add(completeButton, BorderLayout.EAST);
         statusPanel.add(statusText, BorderLayout.CENTER);
         JSplitPane workArea = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new JScrollPane(workItemList), new JScrollPane(formPanel));

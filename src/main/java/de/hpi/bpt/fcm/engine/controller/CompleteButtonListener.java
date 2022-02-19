@@ -9,17 +9,21 @@ import java.awt.event.ActionListener;
 public class CompleteButtonListener implements ActionListener {
     private final ColoredPetriNet cpnModel;
     private final JPanel formPanel;
+    private final JLabel statusText;
+    private int countActions = 0;
 
-    public CompleteButtonListener(ColoredPetriNet cpnModel, JPanel formPanel) {
+    public CompleteButtonListener(ColoredPetriNet cpnModel, JPanel formPanel, JLabel statusText) {
         super();
         this.cpnModel = cpnModel;
         this.formPanel = formPanel;
+        this.statusText = statusText;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        cpnModel.executeCurrentBindingElement();
+        if (cpnModel.executeCurrentBindingElement()) countActions++;
         formPanel.removeAll();
         formPanel.repaint();
+        statusText.setText("#Executed Activitites: " + countActions);
     }
 }

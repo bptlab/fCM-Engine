@@ -7,8 +7,10 @@ import org.cpntools.accesscpn.engine.highlevel.HighLevelSimulator;
 import org.cpntools.accesscpn.engine.highlevel.checker.Checker;
 import org.cpntools.accesscpn.engine.highlevel.instance.Binding;
 import org.cpntools.accesscpn.engine.highlevel.instance.Instance;
+import org.cpntools.accesscpn.engine.highlevel.instance.Marking;
 import org.cpntools.accesscpn.engine.highlevel.instance.ValueAssignment;
 import org.cpntools.accesscpn.model.Arc;
+import org.cpntools.accesscpn.model.Object;
 import org.cpntools.accesscpn.model.PetriNet;
 import org.cpntools.accesscpn.model.Transition;
 import org.cpntools.accesscpn.model.importer.DOMParser;
@@ -34,25 +36,27 @@ public class ColoredPetriNet {
     private File cpnFile;
     private PetriNet petriNet;
     private HighLevelSimulator simulator;
-    private DefaultListModel<String> workItemModel = new DefaultListModel<>();
-    private DefaultListModel<String> inputOutputModel = new DefaultListModel<>();
+    private DefaultListModel<ElementWithRecommendation> workItemModel = new DefaultListModel<>();
+    private DefaultListModel<ElementWithRecommendation> inputOutputModel = new DefaultListModel<>();
     private Map<String,List<Instance<Transition>>> enabledActivities = new HashMap<>();
     private List<Binding> currentBindings = new ArrayList<>();
     private Binding selectedBinding = null;
+    private boolean reassessed = false;
 
-    public DefaultListModel<String> getWorkItemModel() {
+
+    public DefaultListModel<ElementWithRecommendation> getWorkItemModel() {
         return workItemModel;
     }
 
-    public void setWorkItemModel(DefaultListModel<String> workItemModel) {
+    public void setWorkItemModel(DefaultListModel<ElementWithRecommendation> workItemModel) {
         this.workItemModel = workItemModel;
     }
 
-    public DefaultListModel<String> getInputOutputModel() {
+    public DefaultListModel<ElementWithRecommendation> getInputOutputModel() {
         return inputOutputModel;
     }
 
-    public void setInputOutputModel(DefaultListModel<String> inputOutputModel) {
+    public void setInputOutputModel(DefaultListModel<ElementWithRecommendation> inputOutputModel) {
         this.inputOutputModel = inputOutputModel;
     }
 
@@ -126,11 +130,39 @@ public class ColoredPetriNet {
                 String activityName = transitionName.replaceFirst("_\\d+$", "").replaceAll("\\n", " ");
                 if (!enabledActivities.containsKey(activityName)) {
                     enabledActivities.put(activityName, new ArrayList<>());
-                    workItemModel.addElement(activityName);
+                    Recommendation recommendation = recommendationForActiity(activityName);
+                    ElementWithRecommendation activity = new ElementWithRecommendation(activityName, recommendation);
+                    workItemModel.addElement(activity);
                 }
                 enabledActivities.get(activityName).add(ti);
             }
         }
+    }
+
+    private Recommendation recommendationForActiity(String activityName) {
+        if (activityName.contains("request") ||
+                activityName.contains("create") ||
+                activityName.contains("review") ||
+                activityName.contains("reassess_risk")) return Recommendation.COMPLIANT;
+        if (activityName.contains("revise") || activityName.contains("decide")) return Recommendation.BOTH;
+        if (activityName.contains("reassess_claim")) {
+            if (reassessed) return Recommendation.VIOLATING;
+            try {
+                if (!reassessed) {
+                    List<Marking> markings = simulator.getMarking().getAllMarkings();
+                    Marking markingAssessment = markings.stream().filter(m -> m.getPlaceInstance().getNode().getName().getText().contains("assessment__APPROVED")).findFirst().get();
+                    Marking risk = markings.stream().filter(m -> m.getPlaceInstance().getNode().getName().getText().contains("risk__LOW")).findFirst().get();
+                    if (markingAssessment.getTokenCount() > 3 && risk.getTokenCount() > 0) {
+                        return Recommendation.BOTH;
+                    } else {
+                        return Recommendation.VIOLATING;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return Recommendation.NEUTRAL;
     }
 
     public void updateInputOutputOptions(int index) throws Exception {
@@ -138,22 +170,36 @@ public class ColoredPetriNet {
         updateBindings(workItemModel.get(index));
     }
 
-    private void updateBindings(String activityName) throws Exception {
+    private void updateBindings(ElementWithRecommendation activity) throws Exception {
         currentBindings.clear();
-        if (null == activityName) return;
-        List<Instance<Transition>> transitionInstances = enabledActivities.get(activityName);
+        if (null == activity || null == activity.name) return;
+        List<Instance<Transition>> transitionInstances = enabledActivities.get(activity.name);
         for (Instance<Transition> transitionInstance : transitionInstances) {
             if (simulator.isEnabled(transitionInstance))
                 currentBindings.addAll(simulator.getBindings(transitionInstance));
         }
-        updateBindingListView();
+        updateBindingListView(activity);
     }
 
-    private void updateBindingListView() {
+    private void updateBindingListView(ElementWithRecommendation activity) {
         inputOutputModel.clear();
         currentBindings.stream()
                 .map(this::formatBinding)
+                .map(label -> new ElementWithRecommendation(label, recommendationForInputOutputAndActivity(activity, label)))
                 .forEachOrdered(inputOutputModel::addElement);
+    }
+
+    private Recommendation recommendationForInputOutputAndActivity(ElementWithRecommendation activity, String label) {
+        if (activity.recommendation==Recommendation.BOTH) {
+            if (activity.name.contains("revise")) {
+                return label.contains("--> rejected") ? Recommendation.VIOLATING : Recommendation.COMPLIANT;
+            } else if (activity.name.contains("reassess_claim")) {
+                return label.contains("approve") ? Recommendation.COMPLIANT : Recommendation.VIOLATING;
+            } else if (activity.name.contains("decide")) {
+                return label.contains("--> in_question") ? Recommendation.COMPLIANT : Recommendation.VIOLATING;
+            }
+        }
+        return activity.recommendation;
     }
 
     private String formatBinding(Binding binding) {
@@ -215,19 +261,23 @@ public class ColoredPetriNet {
         return tokens;
     }
 
-    public void executeCurrentBindingElement() {
-        if (selectedBinding == null) return;
+    public boolean executeCurrentBindingElement() {
+        if (selectedBinding == null) return false;
         try {
             simulator.execute(selectedBinding);
+            reassessed = selectedBinding.getTransitionInstance().getNode().getName().getText().contains("reassess_claim");
             initialize();
         } catch (IOException e) {
             e.printStackTrace();
             System.err.println("Could not execute selected binding");
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Could not update enabled bindings");
+            return false;
         }
         selectedBinding = null;
+        return true;
     }
 
     public void selectBinding(int index) {
@@ -273,6 +323,36 @@ public class ColoredPetriNet {
             }
         }
         return tokens;
+    }
+
+    public class ElementWithRecommendation {
+        private String name;
+        private Recommendation recommendation;
+
+        public ElementWithRecommendation(String label, Recommendation recommendation) {
+            this.name = label;
+            this.recommendation = recommendation;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Recommendation getRecommendation() {
+            return recommendation;
+        }
+    }
+
+    public static enum Recommendation {
+        COMPLIANT,
+        NEUTRAL,
+        BOTH,
+        VIOLATING;
     }
 
     public class DataObjectToken {
