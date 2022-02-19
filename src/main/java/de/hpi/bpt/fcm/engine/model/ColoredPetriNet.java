@@ -10,7 +10,6 @@ import org.cpntools.accesscpn.engine.highlevel.instance.Instance;
 import org.cpntools.accesscpn.engine.highlevel.instance.Marking;
 import org.cpntools.accesscpn.engine.highlevel.instance.ValueAssignment;
 import org.cpntools.accesscpn.model.Arc;
-import org.cpntools.accesscpn.model.Object;
 import org.cpntools.accesscpn.model.PetriNet;
 import org.cpntools.accesscpn.model.Transition;
 import org.cpntools.accesscpn.model.importer.DOMParser;
@@ -23,6 +22,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +42,11 @@ public class ColoredPetriNet {
     private List<Binding> currentBindings = new ArrayList<>();
     private Binding selectedBinding = null;
     private boolean reassessed = false;
+    private boolean recommendations = false;
 
+    public ColoredPetriNet(boolean recommendations) {
+        this.recommendations = recommendations;
+    }
 
     public DefaultListModel<ElementWithRecommendation> getWorkItemModel() {
         return workItemModel;
@@ -130,7 +134,7 @@ public class ColoredPetriNet {
                 String activityName = transitionName.replaceFirst("_\\d+$", "").replaceAll("\\n", " ");
                 if (!enabledActivities.containsKey(activityName)) {
                     enabledActivities.put(activityName, new ArrayList<>());
-                    Recommendation recommendation = recommendationForActiity(activityName);
+                    Recommendation recommendation = recommendationForActivity(activityName);
                     ElementWithRecommendation activity = new ElementWithRecommendation(activityName, recommendation);
                     workItemModel.addElement(activity);
                 }
@@ -139,7 +143,8 @@ public class ColoredPetriNet {
         }
     }
 
-    private Recommendation recommendationForActiity(String activityName) {
+    private Recommendation recommendationForActivity(String activityName) {
+        if (!recommendations) return Recommendation.NEUTRAL;
         if (activityName.contains("request") ||
                 activityName.contains("create") ||
                 activityName.contains("review") ||
@@ -190,6 +195,7 @@ public class ColoredPetriNet {
     }
 
     private Recommendation recommendationForInputOutputAndActivity(ElementWithRecommendation activity, String label) {
+        if (!recommendations) return Recommendation.NEUTRAL;
         if (activity.recommendation==Recommendation.BOTH) {
             if (activity.name.contains("revise")) {
                 return label.contains("--> rejected") ? Recommendation.VIOLATING : Recommendation.COMPLIANT;
@@ -323,6 +329,16 @@ public class ColoredPetriNet {
             }
         }
         return tokens;
+    }
+
+    public void loadCPN(InputStream cpnStream, String fileName) throws NetCheckException, IOException, ParserConfigurationException, SAXException, EvaluationException {
+        petriNet = DOMParser.parse(cpnStream, fileName);
+        // Create a simulator object
+        simulator = HighLevelSimulator.getHighLevelSimulator(new Simulator(new DaemonSimulator(InetAddress.getLocalHost(), 23456, new File("cpn.ml"))));
+        // set initial state
+        simulator.initialState();
+        // configure simulator for petriNet
+        simulator.setTarget((Notifier) petriNet);
     }
 
     public class ElementWithRecommendation {

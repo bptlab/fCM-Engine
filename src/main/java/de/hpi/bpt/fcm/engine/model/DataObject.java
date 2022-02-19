@@ -1,9 +1,5 @@
 package de.hpi.bpt.fcm.engine.model;
 
-import com.jfoenix.controls.JFXTextField;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 
 public class DataObject {
 
@@ -11,13 +7,10 @@ public class DataObject {
     protected int instanceNo;
     protected Object[] values;
     protected String state;
-    protected GridPane pane;
-    protected TextField[] textFields;
 
     public DataObject(DataClazz clazz) {
         this.clazz = clazz;
         values = new Object[clazz.attributes.length];
-        textFields = new TextField[clazz.attributes.length];
     }
 
     public void setValue(int idx, String value) {

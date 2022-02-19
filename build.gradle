@@ -1,13 +1,18 @@
 plugins {
+    id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.9'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
 }
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 application {
-    mainClass = 'App'
+	mainClass.set('App')
 }
 
-group 'de.uni_potsdam.hpi.bpt'
+group 'de.hpi.bpt'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.11
@@ -17,15 +22,11 @@ repositories {
 }
 
 // Configures plugin
-javafx {
-    version = "11.0.2"
-    modules = ['javafx.controls']
-}
 
 task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'fCM Engine',
-        'Main-Class': 'App'
+        'Main-Class': 'de.hpi.bpt.fcm.engine.App'
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
@@ -38,10 +39,4 @@ dependencies {
     implementation group: 'org.eclipse.emf', name: 'org.eclipse.emf.ecore.xmi', version: '2.5.0.v20100521-1846'
     implementation group: 'org.pushing-pixels', name: 'radiance-theming', version: '5.0.0'
     implementation group: 'org.jdom', name: 'jdom', version: '2.0.2'
-    implementation 'com.jfoenix:jfoenix:9.0.10'
-}
-
-javafx {
-    version = "15"
-    modules = ['javafx.controls', 'javafx.fxml']
 }

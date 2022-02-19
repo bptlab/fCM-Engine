@@ -103,7 +103,7 @@ public class MainForm extends JFrame {
 
     public static void main(String[] args)
     {
-        JFrame mainFrame = new MainForm("fCM Engine", new CaseModel());
+        JFrame mainFrame = new MainForm("fCM Engine", new CaseModel(false));
         mainFrame.setSize(500, 500);
         mainFrame.setVisible(true);
     }
