@@ -117,6 +117,7 @@ public class ColoredPetriNet {
 
     private void determineWorkItems() throws Exception {
         workItemModel.clear();
+        enabledActivities.clear();
         inputOutputModel.clear();
         List<Instance<Transition>> transitionInstances = simulator.getAllTransitionInstances();
         for (Instance<Transition> ti : transitionInstances) {
@@ -207,15 +208,6 @@ public class ColoredPetriNet {
                         .map(label -> label.toLowerCase().substring(token.name.length() + 2))
                         .findFirst()
                         .orElse("");
-//                token.state = (token.isNewObject ? sourceArcs : targetArcs).stream()
-//                        .map(a -> token.isNewObject ? a.getTarget().getName().getText() : a.getSource().getName().getText())
-//                        .filter(label -> label.toLowerCase().contains(token.name.toLowerCase() + "__"))
-//                        .map(label -> label.toLowerCase().substring(token.name.toLowerCase().length() + 2))
-//                        //.map(a -> a.getHlinscription().getText())
-//                        //.filter(insc -> insc.startsWith("{id = " + token.name + "Id"))
-//                        //.map(insc -> insc.replaceAll("(^.+, state =)|}", ""))
-//                        .findFirst()
-//                        .orElse(null);
                 token.count = token.isNewObject ? value : value.replaceAll("(\\(|\\)|\"|case|[A-Za-z]+,)", "");
                 tokens.add(token);
             }
