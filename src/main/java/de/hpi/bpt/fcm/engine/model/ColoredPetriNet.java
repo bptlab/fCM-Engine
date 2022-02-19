@@ -193,15 +193,29 @@ public class ColoredPetriNet {
                 DataObjectToken token = new DataObjectToken();
                 token.isNewObject = variable.contains("Count");
                 token.name = variable.replaceFirst("Count|Id", "");
-                token.state = (token.isNewObject ? sourceArcs : targetArcs).stream()
-                        .map(a -> token.isNewObject ? a.getTarget().getName().getText() : a.getSource().getName().getText())
+                if (!token.isNewObject) {
+                    token.state = targetArcs.stream()
+                            .map(a -> a.getSource().getName().getText())
+                            .filter(label -> label.toLowerCase().contains(token.name.toLowerCase() + "__"))
+                            .map(label -> label.toLowerCase().substring(token.name.length() + 2))
+                            .findFirst()
+                            .orElse("");
+                }
+                token.state = (token.state == null ? "" : token.state + " --> ") + sourceArcs.stream()
+                        .map(a -> a.getTarget().getName().getText())
                         .filter(label -> label.toLowerCase().contains(token.name.toLowerCase() + "__"))
-                        .map(label -> label.toLowerCase().substring(token.name.toLowerCase().length() + 2))
-                        //.map(a -> a.getHlinscription().getText())
-                        //.filter(insc -> insc.startsWith("{id = " + token.name + "Id"))
-                        //.map(insc -> insc.replaceAll("(^.+, state =)|}", ""))
+                        .map(label -> label.toLowerCase().substring(token.name.length() + 2))
                         .findFirst()
-                        .orElse(null);
+                        .orElse("");
+//                token.state = (token.isNewObject ? sourceArcs : targetArcs).stream()
+//                        .map(a -> token.isNewObject ? a.getTarget().getName().getText() : a.getSource().getName().getText())
+//                        .filter(label -> label.toLowerCase().contains(token.name.toLowerCase() + "__"))
+//                        .map(label -> label.toLowerCase().substring(token.name.toLowerCase().length() + 2))
+//                        //.map(a -> a.getHlinscription().getText())
+//                        //.filter(insc -> insc.startsWith("{id = " + token.name + "Id"))
+//                        //.map(insc -> insc.replaceAll("(^.+, state =)|}", ""))
+//                        .findFirst()
+//                        .orElse(null);
                 token.count = token.isNewObject ? value : value.replaceAll("(\\(|\\)|\"|case|[A-Za-z]+,)", "");
                 tokens.add(token);
             }
