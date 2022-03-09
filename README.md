@@ -17,7 +17,7 @@ Given a CPN and an optional domain model (UML class diagram), the engine will gu
 
 ## Content of the Repository
 * **Experiment:**
-  * The raw data of the user study can be found in `src/main/resources/experiments/results.csv´
+  * The raw data of the user study can be found in `src/main/resources/experiments/results.csv`
 * **Examples:**
   * `src/main/resources/experiments/fragments.bpmn` a BPMN defining the fragments of the insurance claim example
   * `src/main/resources/experiments/domain_model.uml` a UML class diagram comprising the domain model for the example (modeled using [Papyrus](https://www.eclipse.org/papyrus/)
