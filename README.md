@@ -38,8 +38,7 @@ Given a CPN and an optional domain model (UML class diagram), the engine will gu
 ### Prerequisites
 
 In order to run the engine you need
-* java version 11 or higher
-* a compatible javaFX version.
+* java version 9 or higher
 Furthermore, the project is configured with the gradle build tool and the instructions are written accordingly.
 However, you can use an IDE of your choice or compile the sources manually.
 
@@ -82,7 +81,7 @@ Please note, that the tool has dependencies, and that these dependencies may hav
 * Access/CPN to create CPNtools compatible CPNs. The dependency is linked as a set of external libraries (see `lib/`)
 * Eclipse EMF dependency for using Access/CPN
 * jdom for XML parsing (domain model)
-* jfoenix for UI elements
+* radiance for styling the UI
 
 ### License
 
