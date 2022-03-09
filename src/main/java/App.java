@@ -1,5 +1,6 @@
 import de.hpi.bpt.fcm.engine.model.CaseModel;
 import de.hpi.bpt.fcm.engine.view.MainForm;
+import org.pushingpixels.radiance.theming.api.skin.RadianceBusinessLookAndFeel;
 import org.pushingpixels.radiance.theming.api.skin.RadianceGraphiteLookAndFeel;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ public class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
-                UIManager.setLookAndFeel(new RadianceGraphiteLookAndFeel());
+                UIManager.setLookAndFeel(new RadianceBusinessLookAndFeel());
             } catch (Exception e) {
                 e.printStackTrace();
             }

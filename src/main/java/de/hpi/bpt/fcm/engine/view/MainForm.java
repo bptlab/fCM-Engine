@@ -6,6 +6,7 @@ import de.hpi.bpt.fcm.engine.model.ColoredPetriNet;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.TextAttribute;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,8 +18,8 @@ public class MainForm extends JFrame {
     public JMenuItem loadUMLItem = new JMenuItem("Load UML");
     public JMenu aboutMenu = new JMenu("About");
     public JMenuItem exitOption = new JMenuItem("Exit");
-    public JList workItemList;
-    public JList inputOutputList;
+    public JList<ColoredPetriNet.ElementWithRecommendation> workItemList;
+    public JList<ColoredPetriNet.ElementWithRecommendation> inputOutputList;
     public JPanel statusPanel = new JPanel();
     public JButton completeButton = new JButton("Complete");
     public JLabel statusText = new JLabel("");
@@ -29,7 +30,7 @@ public class MainForm extends JFrame {
         super(title);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         // List
-        workItemList = new JList(caseModel.getCpn().getWorkItemModel());
+        workItemList = new JList<>(caseModel.getCpn().getWorkItemModel());
         workItemList.setCellRenderer(new DefaultListCellRenderer(){
             @Override
             public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellhasFocus) {
@@ -38,12 +39,17 @@ public class MainForm extends JFrame {
                     switch (((ColoredPetriNet.ElementWithRecommendation)value).getRecommendation()) {
                         case COMPLIANT :
                         case BOTH:
-                            c.setForeground(new Color(73, 156, 84));
+                            c.setFont(c.getFont().deriveFont(Font.BOLD));
+                            //c.setForeground(new Color(73, 156, 84));
                             break;
                             //c.setForeground(new Color(246, 191, 105));
                             //break;
                         case VIOLATING:
-                            c.setForeground(new Color(199, 84, 80   ));
+                            Font newFont = c.getFont();
+                            Map attributes = newFont.getAttributes();
+                            attributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
+                            c.setFont(newFont.deriveFont(attributes));
+                            //c.setForeground(new Color(199, 84, 80   ));
                             break;
                     }
                 }
@@ -52,7 +58,7 @@ public class MainForm extends JFrame {
         });
         workItemList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         workItemList.addListSelectionListener(new SelectWorkItemListener(caseModel.getCpn()));
-        inputOutputList = new JList(caseModel.getCpn().getInputOutputModel());
+        inputOutputList = new JList<>(caseModel.getCpn().getInputOutputModel());
         inputOutputList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         inputOutputList.addListSelectionListener(new SelectInputOutputListListener(caseModel, formPanel, dataObjectViews));
         inputOutputList.setCellRenderer(new DefaultListCellRenderer(){
@@ -62,10 +68,17 @@ public class MainForm extends JFrame {
                 if (value instanceof ColoredPetriNet.ElementWithRecommendation) {
                     switch (((ColoredPetriNet.ElementWithRecommendation)value).getRecommendation()) {
                         case COMPLIANT :
-                            c.setForeground(new Color(73, 156, 84));
+                            c.setFont(c.getFont().deriveFont(Font.BOLD));
+                            //c.setForeground(new Color(73, 156, 84));
                             break;
+                        //c.setForeground(new Color(246, 191, 105));
+                        //break;
                         case VIOLATING:
-                            c.setForeground(new Color(199, 84, 80   ));
+                            Font newFont = c.getFont();
+                            Map attributes = newFont.getAttributes();
+                            attributes.put(TextAttribute.STRIKETHROUGH, TextAttribute.STRIKETHROUGH_ON);
+                            c.setFont(newFont.deriveFont(attributes));
+                            //c.setForeground(new Color(199, 84, 80   ));
                             break;
                     }
                 }
