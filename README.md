@@ -1,4 +1,6 @@
-# fCM to CPN Compiler
+# fCM Engine Based on CPNTools
+
+**The version on this branch has been prepared for a user study evaluating recommendations for knowledge workers. When starting the engine the user can choose whether to receive recommendations or not. The example model is loaded automatically.**
 
 Knowledge workers make interconnected decisions to drive processes.
 Therefore, it is necessary to consider the available information, possible actions, and general rules.
@@ -11,11 +13,15 @@ Given a CPN and an optional domain model (UML class diagram), the engine will gu
 * it shows the enabled activities and their variants (input-output combinations)
 * if a domain model has been provided forms will be presented to the user
 * users can fill forms and complete activities. The state of the engine will be udpated automatically.
+* if the user chose recommendations, activities and input-output combinations are filtered: compliant ones are bold, incompliant ones are struck through.
 
 ## Content of the Repository
 * **Examples:**
-  * `src/main/resources/conference_fragments.cpn` a CPN defining the behavior of the *paper submission and reviewing* example from the paper (generated using [fcm2cpn](https://github.com/bptlab/fcm2cpn/tree/caise)).
-  * `src/main/resources/conference_domain_model.uml` contains a UML file comprising the domain model for the example (modeled using [Papyrus](https://www.eclipse.org/papyrus/)).
+  * `src/main/resources/experiments/fragments.bpmn` a BPMN defining the fragments of the insurance claim example
+  * `src/main/resources/experiments/domain_model.uml` a UML class diagram comprising the domain model for the example (modeled using [Papyrus](https://www.eclipse.org/papyrus/)
+  * `src/main/resources/experiments/termination_condition.json` a json file specifying the example's termination condition
+  * `colored_petri_net(Experiments).cpn` a CPN defining the behavior of the *Claim Handling* example above (generated using [fcm2cpn](https://github.com/bptlab/fcm2cpn/tree/caise) and manually adapted). This version is used by the engine.
+  * `colored_petri_net(State_Space).cpn` a CPN defining the behavior of the *Claim Handling* example above (generated using [fcm2cpn](https://github.com/bptlab/fcm2cpn/tree/caise) and manually adapted). This version has been used for performance measurements. It has a finite state space.
 * **Engine:**
   * `src/main/java` contains the source files for the process execution engine.
   * `src/main/resources/scenes` contains fxml and css files for the UI.
