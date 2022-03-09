@@ -1,0 +1,15 @@
+SubjectID,hasRecommendations,Level of expertise (1-5),Duration,# aborted executions,# executed activities,What did support you reaching the Objective?,What did hinder you reaching the objective?
+1,0,1,13:30,0,22,fragments and OLCs,"complex model, lack of fCM knowledge/practice, lack of visualization/marking of the model"
+2,0,2,06:46,0,19,model fragments (didn't look at OLCs),"too abstract UI, wished for model-based execution engine"
+3,0,4,08:55,1,19,"fragments as first step, visualization of state changes in engine","lack of displayed related data objects (lead to error), incomrehensible/unübersichtliche fragments, lacking visual notation in engine"
+4,0,4,12:31,2,21,fragments (didn't look at OLC),"didn't understand/overlook the data constraints of a fragment, didn't look into the future enough (didn't plan far enough)"
+5,0,3,09:05,0,21,fragments,"complexity of model, thinking backwards from objective to current state, lack of visual notation of objective, lack of visualisation of current state (available data objects, executed activities)"
+6,0,4,11:54,1,19,"Backtracking, execution engine stated enabled acivities reducing the search space for KW","static model, graphic UI how do activities alter DOs, complex model, lacking visual aid"
+7,0,4,11:18,2,19,fragments (looked at OLCs only once),Input-Output-Sets are complex and hard to comprehend; layout of fragments (objects that are read are sometimes placed to the right hand side of the fragment) is confusing; UI was hard to comprehend
+8,1,2,06:30,0,19,"Recommendations only to a limited extent, red recommendations more useful than green ones, model helped","lack of visualization of the execution engines UI, CPN-Tools binding elements syntax is too abstract"
+9,1,1,08:41,0,19,"fragments, OLCs did not help, recommendations",complexity/incomrehensibility of the model
+10,1,4,11:27,0,22,"without fragments it would have been impossible, recommendations helped a lot","complex example, lack of domain knowledge"
+11,1,3,07:24,0,19,"color coding, fragments only limitedly, OLC for risk","Lost overview of model, lost idea ""where you are"", needed display of current state (DOs), didn't make notes"
+12,1,5,04:39,0,19,"labels/color coding, common sense, red labels especially","lack of visualization of state transitions, all list was green (not so helpful)"
+13,1,4,04:40,0,19,"trust in the system by color coding: mainly red, displayed state transitions in engine","lacking graphical UI, displayed options hard to comprehend in engine (""the state after"")"
+14,1,3,05:50,0,19,"see what must not be done --> red, green did not help that much, state transitions of the execution engine","wanted to see all available data objects in the current state, otherwise pretty hard to track the state of objectives --> ""high cognitive load"""
