@@ -1,0 +1,8 @@
+Subject,Level of expertise (1-5),Duration,# aborted executions,# executed activities,What did support you reaching the Objective?,What did hinder you reaching the objective?
+1,1,13:30,0,22,"explanation of the process and execution engine by supervisor, fragments and OLCs","complex model, lack of fCM knowledge/practice, lack of visualization/marking of the model"
+2,2,06:46,0,19,model fragments (didn't look at OLCs),"too abstract UI, wished for model-based execution engine"
+3,4,08:55,1,19,"fragments as first step, visualization of state changes in engine","lack of displayed related data objects (lead to error), incomrehensible/unübersichtliche fragments, lacking visual notation in engine"
+4,4,12:31,2,21,fragments (didn't look at OLC),"didn't understand/overlook the data constraints of a fragment, didn't look into the future enough (didn't plan far enough)"
+5,3,09:05,0,21,fragments,"complexity of model, thinking backwards from objective to current state, lack of visual notation of objective, lack of visualisation of current state (available data objects, executed activities)"
+6,4,11:54,1,19,"Backtracking, execution engine stated enabled acivities --> reduced ""search space"" for KW","static model, graphic UI how do activities alter DOs, complex model, lacking visual aid"
+7,4,11:18,2,19,fragments (looked at OLCs only once),Input-Output-Sets are complex and hard to comprehend; layout of fragments (objects that are read are sometimes placed to the right hand side of the fragment) is confusing; UI was hard to comprehend

@@ -1,0 +1,9 @@
+Subject,Level of expertise (1-5),Duration,# aborted executions,# executed activities,What did support you reaching the Objective?,What did hinder you reaching the objective?
+1,1,02:54,0,19,"color coding, arrangement of tasks","first time, bad UI"
+2,3,03:33,0,19,green color coding,needed to understand the model first
+3,2,03:04,0,19,green and red color coding,no batch processing/ iteratively requesting/creating... assessments
+4,4,05:30,0,19,action score,"missing mapping of engine to case, graphical UI"
+5,1,05:19,0,19,recommendations,"Bad UI, graphical/model-based UI, overview of current state, fear of wrong recommendations"
+6,1,04:35,0,19,green color coding,"Bad UI, cryptical transition description"
+7,1,07:10,0,19,"color coding (traffic light), more than model","complex example, lacking routine"
+8,3,05:41,0,19,green color coding,"lacking knowledge about the process, hard to comprehend the UI"

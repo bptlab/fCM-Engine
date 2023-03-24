@@ -1,0 +1,8 @@
+Subject,Level of expertise (1-5),Duration,# aborted executions,# executed activities,What did support you reaching the Objective?,What did hinder you reaching the objective?
+1,2,06:30,0,19,"Recommendations only to a limited extent, red recommendations more useful than green ones, model helped","lack of visualization of the execution engines UI, CPN-Tools binding elements syntax is too abstract"
+2,1,08:41,0,19,"fragments, OLCs did not help, recommendations",complexity/incomrehensibility of the model
+3,4,11:27,0,22,"without fragments it would have been impossible, recommendations helped a lot","complex example, lack of domain knowledge"
+4,3,07:24,0,19,"color coding, fragments only limitedly, OLC for risk","Lost overview of model, lost idea ""where you are"", needed display of current state (DOs), didn't make notes"
+5,5,04:39,0,19,"labels/color coding, common sense, red labels especially","lack of visualization of state transitions, all list was green (not so helpful)"
+6,4,04:40,0,19,"trust in the system by color coding: mainly red, ""Optionen ausschließen können"", displaeyed state transitions in engine","lacking graphical UI, displayed options hard to comprehend in engine (""the state after"")"
+7,3,05:50,0,19,"see what must not be done --> red, green did not help that much, state transitions of the execution engine","wanted to see all available data objects in the current state, otherwise pretty hard to track the state of objectives --> ""high cognitive load"""
