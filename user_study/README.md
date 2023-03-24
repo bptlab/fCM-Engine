@@ -1,4 +1,4 @@
-# recommendations-user-study
+# User Study
 
 To evaluate how filter-based and score-based recommendations can assist knowledge workers in reaching their objectives, a user study was conducted. This repository documents the setup and results of this user study.
 
