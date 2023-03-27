@@ -4,9 +4,8 @@ The results of the three groups of participants are given here in three separate
 
 The participants had comparable prior experience with. Thogh, the experience for the group with score-based recommendations was a bit lower.
 
-<img src="[https://mma.prnewswire.com/media/1513369/Educative_Logo.jpg](https://user-images.githubusercontent.com/32839252/227851784-0169fea5-ec5a-438e-b576-12c3bf6caa18.jpeg)"  width="400">
+<img alt="image"  src="https://user-images.githubusercontent.com/32839252/227851784-0169fea5-ec5a-438e-b576-12c3bf6caa18.jpeg"  width="400">
 
-![experience](https://user-images.githubusercontent.com/32839252/227851784-0169fea5-ec5a-438e-b576-12c3bf6caa18.jpeg)
 
 As result of the experiments, we measured the duration, the number of attempts, and thenumber of actions needed to reach the objective. Also, we asked each participant by what they were supported and by what they were hindered to reach their objective.
 
@@ -14,7 +13,7 @@ As result of the experiments, we measured the duration, the number of attempts, 
 
 Given recommendations, participants did not do any mistakes and reached their goal in the first attempt.
 
-![attempts](https://user-images.githubusercontent.com/32839252/227852034-c3bb403d-5e67-4280-aef1-13c6059ebcd3.jpeg)
+<img alt="image"  src="https://user-images.githubusercontent.com/32839252/227852034-c3bb403d-5e67-4280-aef1-13c6059ebcd3.jpeg"  width="400">
 
 ## Number of Actions
 
@@ -24,6 +23,6 @@ Furthermore, the number of actions needed to satisfy the goal was measured. The 
 
 Given recommendations, the participants were able to reach their goals faster than without. Also, score-based recommendations were an even better assistance.
 
-![duration](https://user-images.githubusercontent.com/32839252/227852193-90d953cf-5e07-4e00-af6a-7b13961644d6.jpeg)
+<img alt="image"  src="https://user-images.githubusercontent.com/32839252/227852193-90d953cf-5e07-4e00-af6a-7b13961644d6.jpeg"  width="400">
 
 For the duration, a t-test is applied that returns a value of -2.18 with a degree of freedom of 9.66 and a p-value of 0.027. For a confidence interval of 95\%, this confirms the third hypothesis. 
