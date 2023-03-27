@@ -4,6 +4,8 @@ The results of the three groups of participants are given here in three separate
 
 The participants had comparable prior experience with. Thogh, the experience for the group with score-based recommendations was a bit lower.
 
+<img src="[https://mma.prnewswire.com/media/1513369/Educative_Logo.jpg](https://user-images.githubusercontent.com/32839252/227851784-0169fea5-ec5a-438e-b576-12c3bf6caa18.jpeg)"  width="400">
+
 ![experience](https://user-images.githubusercontent.com/32839252/227851784-0169fea5-ec5a-438e-b576-12c3bf6caa18.jpeg)
 
 As result of the experiments, we measured the duration, the number of attempts, and thenumber of actions needed to reach the objective. Also, we asked each participant by what they were supported and by what they were hindered to reach their objective.
